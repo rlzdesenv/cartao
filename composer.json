@@ -1,0 +1,30 @@
+{
+  "name": "rlzdesenv/cartao",
+  "description": "Cartão de Crédito",
+  "license": "BSD-3-Clause",
+  "type": "library",
+  "require": {
+    "php": ">=8.0",
+    "ext-apcu": "*",
+    "ext-soap": "*",
+    "ext-json": "*",
+    "ext-simplexml": "*",
+    "psr/log": "^1.0",
+    "guzzlehttp/guzzle": "^6.3 || ^7.0",
+    "cache/apcu-adapter": "^1.0",
+    "ext-openssl": "*"
+  },
+  "authors": [
+    {
+      "name": "RLZ Informática LTDA",
+      "email": "desenvolvimento@rlz.com.br"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Cartao\\": "src"
+    }
+  }
+}
