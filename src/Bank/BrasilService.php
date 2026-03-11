@@ -25,6 +25,7 @@ class BrasilService
     private ?Pagador $pagador;
     private ?Certificado $certificado;
     private string $linkPagamento;
+    private string $id;
 
     private array $debitos = [];
 
@@ -38,7 +39,7 @@ class BrasilService
      */
     public function __construct(string $appKey = null, string $clientId = null, string $secretId = null, Pagador $pagador = null, Certificado $certificado = null)
     {
-        $this->cache = new ApcuCachePool();
+        $this->cache = new ApcuCachePoo();
         $this->appKey = $appKey;
         $this->clientId = $clientId;
         $this->secretId = $secretId;
@@ -139,6 +140,7 @@ class BrasilService
 
             if ($res->getStatusCode() === 200 || $res->getStatusCode() === 201) {
                 $body = json_decode($res->getBody()->getContents());
+                $this->setId($body->codigoSolicitacao);
                 $this->setLinkPagamento($body->linkCartao);
             }
         } catch (RequestException $e) {
@@ -286,6 +288,18 @@ class BrasilService
         $this->debitos[] = $debito;
         return $this;
     }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function setId(string $id): BrasilService
+    {
+        $this->id = $id;
+        return $this;
+    }
+
 
 
     public function getLinkPagamento(): string
