@@ -131,7 +131,7 @@ class BrasilService
 
             $client = new Client(['verify' => false]);
             $res = $client->request('POST', $endpoint, [
-                'cert' => $this->getCertificado()->getCertificadoPem(),
+                'cert' => $this->getCertificado()->getCertificateFilePem(),
                 'headers' => ['Authorization' => 'Bearer ' . $token],
                 'json' => $data,
                 'on_stats' => function (\GuzzleHttp\TransferStats $stats) {
@@ -324,3 +324,4 @@ class BrasilService
 
 
 }
+
