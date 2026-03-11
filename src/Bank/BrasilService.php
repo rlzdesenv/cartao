@@ -23,7 +23,8 @@ class BrasilService
     private bool $sandbox = false;
     private ?string $appKey = null;
     private ?Pagador $pagador;
-    private ?Certificado $certificado;
+
+    private $certificado;
     private string $linkPagamento;
     private string $id;
 
@@ -37,7 +38,7 @@ class BrasilService
      * @param string|null $clientId
      * @param string|null $secretId
      */
-    public function __construct(string $appKey = null, string $clientId = null, string $secretId = null, Pagador $pagador = null, Certificado $certificado = null)
+    public function __construct(string $appKey = null, string $clientId = null, string $secretId = null, Pagador $pagador = null, $certificado = null)
     {
         $this->cache = new ApcuCachePool();
         $this->appKey = $appKey;
@@ -130,7 +131,7 @@ class BrasilService
 
             $client = new Client(['verify' => false]);
             $res = $client->request('POST', $endpoint, [
-                'cert' => $this->getCertificado()->getCertificateFilePem(),
+                'cert' => $this->getCertificado()->getCertificadoPem(),
                 'headers' => ['Authorization' => 'Bearer ' . $token],
                 'json' => $data,
                 'on_stats' => function (\GuzzleHttp\TransferStats $stats) {
@@ -158,30 +159,27 @@ class BrasilService
             } else {
                 throw new Exception($e->getMessage(), $e->getCode());
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
         }
     }
 
     /**
-     * @param $certificado Certificado
+     * @param  $certificado
      * @return BrasilService
      */
-    public function setCertificado(Certificado $certificado): BrasilService
+    public function setCertificado($certificado): BrasilService
     {
+        /** @var Certificado $certificado
+        declarado dessa forma, pois o certificado pode ser qualquer um desde
+        que retorne um método getCertificateFilePem */
         $this->certificado = $certificado;
         return $this;
     }
 
-
-    /**
-     * @return Certificado
-     */
-    private function getCertificado(): Certificado
+    private function getCertificado()
     {
-
         return $this->certificado;
-
     }
 
     /**
@@ -326,4 +324,3 @@ class BrasilService
 
 
 }
-
