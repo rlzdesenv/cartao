@@ -39,7 +39,7 @@ class BrasilService
      */
     public function __construct(string $appKey = null, string $clientId = null, string $secretId = null, Pagador $pagador = null, Certificado $certificado = null)
     {
-        $this->cache = new ApcuCachePoo();
+        $this->cache = new ApcuCachePool();
         $this->appKey = $appKey;
         $this->clientId = $clientId;
         $this->secretId = $secretId;
@@ -326,3 +326,4 @@ class BrasilService
 
 
 }
+
