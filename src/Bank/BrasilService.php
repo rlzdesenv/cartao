@@ -106,7 +106,7 @@ class BrasilService
         try {
             $data = new stdClass();
             $data->tipoPessoa = $this->pagador->getTipoDocumento() === 'CPF' ? 1 : 2;
-            $data->cpfCnpj = (int)$this->pagador->getDocumento();
+            $data->cpfCnpj = $this->pagador->getDocumento();
             $data->debitos = [];
             /** @var  Debito $debito */
             foreach ($this->debitos as $debito) {
